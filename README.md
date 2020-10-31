@@ -1,5 +1,5 @@
-# ZEBRA Label - API based ZPL Printer in PHP #
-** for ZEBRA label printers **
+# ZEBRA Label - API based ZPL rinter in PHP #
+**for ZEBRA label printers**
 
 This small PHP script 'zebra_printer.php' prints an indivial label on demand.
 It is possible to include own images and variables.
@@ -18,7 +18,7 @@ Steps:
 - http://labelary.com/viewer.html offers an excellent online tool to edit own forms
 
 
-![The result](https://github.com/joembedded/JesFs/blob/master/docu/labels.jpg)
+![The result](https://github.com/joembedded/zebra_zpl_php_label/blob/master/docu/labels.jpg)
 
 [Image: The result]
 
