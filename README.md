@@ -4,6 +4,23 @@
 This small PHP script 'zebra_printer.php' prints an indivial label on demand.
 It is possible to include own images and variables.
 
+ZPL is a simple language for lables. A 'Programming Guide' can be downloaded from the manufacturer's homepage
+
+This is a simple label with 4 lines
+```
+	^XA
+	^FX Simple Label (e.g. Adress) 38x23mm, 4 Lines
+	^FB460,5,,C,0
+	^FO0,50^CF0,40
+	^FD
+	My Name\&
+	Street\&
+	12345 City\&
+	joembedded@gmail.com\&
+	^FS
+	^XZ
+```
+
 A ZPL printer with LAN is required. Here, a 'ZD420-300dpi' was used with 38x23 mm labels (1.5" x 0.9")
 
 Steps:
@@ -16,7 +33,6 @@ Steps:
 - To show how 'zebra_printer.php' is working, start 'zebra_label.php'
 - Feel free to add own '.frm'-files
 - http://labelary.com/viewer.html offers an excellent and free online tool to edit own forms
-
 
 ![The result](https://github.com/joembedded/zebra_zpl_php_label/blob/main/docu/labels.jpg)
 
