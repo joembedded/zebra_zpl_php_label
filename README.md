@@ -12,8 +12,8 @@ Steps:
 - Configure printer to 'wired' and configure to fixed IP
 - By default TCP port 6101 is used for 'RAW' input
 - The printer offers also a webserver (for adjustment and calibration)
-- Install the scripts on a local webserver or NAS. PHP is required
-- To show how 'zebra_printer.php'is working, start 'zebra_label.php'
+- Install the scripts from this project on a local webserver. PHP is required
+- To show how 'zebra_printer.php' is working, start 'zebra_label.php'
 - Feel free to add own '.frm'-files
 - http://labelary.com/viewer.html offers an excellent and free online tool to edit own forms
 
