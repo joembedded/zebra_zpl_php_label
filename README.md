@@ -1,4 +1,4 @@
-# ZEBRA Label - API based ZPL rinter in PHP #
+# ZEBRA Label - API based ZPL printer in PHP #
 **for ZEBRA label printers**
 
 This small PHP script 'zebra_printer.php' prints an indivial label on demand.
