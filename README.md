@@ -15,10 +15,10 @@ Steps:
 - Install the scripts on a local webserver or NAS. PHP is required
 - To show how 'zebra_printer.php'is working, start 'zebra_label.php'
 - Feel free to add own '.frm'-files
-- http://labelary.com/viewer.html offers an excellent online tool to edit own forms
+- http://labelary.com/viewer.html offers an excellent and free online tool to edit own forms
 
 
-![The result](https://github.com/joembedded/zebra_zpl_php_label/blob/master/docu/labels.jpg)
+![The result](https://github.com/joembedded/zebra_zpl_php_label/blob/main/docu/labels.jpg)
 
 [Image: The result]
 
