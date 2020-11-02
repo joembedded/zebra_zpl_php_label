@@ -33,6 +33,7 @@ Steps:
 - To show how 'zebra_printer.php' is working, start 'zebra_label.php'
 - Feel free to add own '.frm'-files
 - http://labelary.com/viewer.html offers an excellent and free online tool to edit own forms
+- Also very easy: design a label with the (free) ZEBRA Designer and save the output (ZPL) to a file ('.prn') and then edit it
 
 ![The result](https://github.com/joembedded/zebra_zpl_php_label/blob/main/docu/labels.jpg)
 
