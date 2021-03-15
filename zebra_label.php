@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<!-- (C)2020JoWi joembedded.de -->
+<!-- (C)JoWi joembedded.de 
+
+This is a simple test form to send manual paramaters to the available forms.
+For "Auto Print" Forms see 'badge.html' as sample usecase.
+-->
 <html>
     <head>
         <meta charset="utf-8">
@@ -96,7 +100,7 @@
 			<br>
 			<b>Result:</b>
 			<div>
-				Res: <input class="t_out"; style="width: 60%;" type="text" id="id_t_res" disabled><br>
+				Result: <input class="t_out"; style="width: 60%;" type="text" id="id_t_res" disabled><br>
 			</div>
 
 			<br>

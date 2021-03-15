@@ -42,6 +42,7 @@ Steps:
 
 ## Changelog ##
 - V0.1  First Release
+- V0.2  Added 'badge.html' as sample application form
 
 ---
 
