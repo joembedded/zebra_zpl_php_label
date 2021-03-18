@@ -1,9 +1,9 @@
 <?PHP
 	/* Zebra_print.php
-	* (C)2020JoWi joembedded.de
+	* (C)2021JoWi joembedded.de
 	* Form renderer and sender 
 	*
-	* Sample FORM file with 2 Parameters and 2 Images
+	* Sample FORM file with 2 Parameters
 	^XA
 	^LRY
 	^FO100,50
@@ -12,22 +12,30 @@
 	^FD$0^FS					  <- $0 to $5 is replaced by p0..p5
 	^FO130,170
 	^FD$1^FS
-	^FD$#bt32x32.png^FS            <- $#FNAME is replcaed by ZPL data of FNAME (only for PNG)
-	^FD$#qr195.png^FS
 	^XZ
 	*/
 	error_reporting(E_ALL);
 	header('Content-Type: text/plain; charset=utf-8');
-	require_once("./zebralib.php");
 
 	//----- Local settings for THIS printer -------
 	define ("PRINTER_IP","192.168.178.241");
 	define ("PRINTER_PORT","6101"); // 6101 Default RAW Port ZD420
 
+	// Send Image to TCP-RAW, Timeout 30 secs
+	function zpl_sendto($host, $port, $zpl){
+		$fp = @fsockopen($host, $port, $errno, $errstr, 30);
+		if (!$fp) {
+			return "ERROR: $errstr ($errno)";
+		} else {
+			fwrite($fp, $zpl);
+			fclose($fp);
+			return '';	// OK
+		}
+	}
+
 	$dbg=@$_REQUEST["dbg"];
 	//$dbg = -1; // Man.
 	
-
 	$p0=@$_REQUEST["p0"];
 	$p1=@$_REQUEST["p1"];
 	$p2=@$_REQUEST["p2"];
@@ -66,29 +74,6 @@
 	$form = str_replace('$5', $p5, $form);
 	
 	if($dbg>1) echo "Form(Params):\n".$form."\n\n";
-
-	for(;;){
-		$pos = strpos($form,'$#');
-		if($pos===false) break;
-		$pngfname='';
-		$pos+=2;
-		for(;;){
-			$c=substr($form,$pos,1);
-			if($c<=' ' || $c>'z' || $c=='^') break;
-			$pngfname.=$c;
-			$pos++;
-		}
-		if($dbg>1) echo "\n(Found Image '$pngfname')";
-
-		$srcimage = @imagecreatefrompng("./forms/$pngfname"); 
-		if($srcimage === false ) die("ERROR: File '$pngfname' not Found or not PNG Format");
-		$zimage = new ZImage($srcimage); 
-		$imgdata = $zimage->toAscii();
-
-		if($dbg>1) echo "(Image '$pngfname': ".strlen($imgdata)." Bytes)\n";
-
-		$form = str_replace('$#'.$pngfname, $imgdata, $form);
-	}
 
 	if($dbg>0) {
 		if($dbg>1) echo "Form(Images):\n".$form."\n";

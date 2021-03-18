@@ -25,9 +25,11 @@
 			let p3 = ""
 			let p4 = ""
 			let p5 = ""
+      let pin = "???"
 
       const printZebraMultiMacForm = "MAC_QR_multi.frm"
       const printZebraMac38x23Form = "MAC_QR_38x23.frm"
+      const printZebraMacPinLogo38x23Form = "MAC_PIN_LOGO_38x23.frm"
 
       //----------- functions -------
       function runAjax(){
@@ -44,7 +46,27 @@
 				  document.getElementById("printResult").textContent = result
 			  },'text')
       }      
+
+      function getPin(){
+        if(ajaxActiveFlag){
+          alert("Busy! Wait...")
+          return
+        }
+        document.getElementById("printResult").textContent = "Wait..."
+			  ajaxActiveFlag=1
+        let jcmd = { mac:"0123456789ABCDEF"}
+        $.get("./gen_pin.php", jcmd , function( data ) {
+				  ajaxActiveFlag=0;
+				  let result = data
+          pin = result.pin
+          //console.log(pin)          
+          document.getElementById("blxPin").textContent =  pin			  
+				  document.getElementById("printResult").textContent = "OK"
+
+        },'json')
+      }      
       
+
       // ======= Print a simple Label with several QR codes, contains MACs =====
       function printZebraMultiMac(){
         formname = printZebraMultiMacForm  // global args
@@ -61,45 +83,61 @@
         runAjax()
       }
       
+      
+      // ======= Print a Packing, MAC, PIN, LOgo QR =====
+      function printZebra38x23MacPinLogo(){
+        formname = printZebraMacPinLogo38x23Form  // global args
+			  p0 = document.getElementById("blxMAC").textContent
+			  p1 = document.getElementById("blxPin").textContent
+        runAjax()
+      }
+      
+      
+      function printForms(){
+        window.location="./zebra_label.php";
+      }
+      
       function setup() {
 			// Isolate URL Parameters
 			const qs = location.search.substr(1).split('&')
-  			urlpar = {}
-  			for (let x = 0; x < qs.length; x++) {
-    			let kv = qs[x].split('=')
-    			if (kv[1] === undefined) kv[1] = ''
-    			urlpar[kv[0]] = decodeURI(kv[1])
-  			}
+      urlpar = {}
+      for (let x = 0; x < qs.length; x++) {
+        let kv = qs[x].split('=')
+        if (kv[1] === undefined) kv[1] = ''
+        urlpar[kv[0]] = decodeURI(kv[1])
+      }
 
-        // Set Parameters
-				document.getElementById("blxMAC").textContent = urlpar.mac
-				document.getElementById("blxType").textContent = urlpar.type
-				document.getElementById("blxFW").textContent = urlpar.fw
-				document.getElementById("blxDevice").textContent = urlpar.advname
+      $.ajaxSetup({ 
+      type: 'POST',	
+      timeout: 60000, 	// 60 secs Time
+      error: function(xhr, status , error){ // error string already in xhr
+        var errorMessage = xhr.status + ': ' + xhr.statusText+" - AJAX:'"+error+"'"
+        if(xhr.responseText!==undefined) errorMessage+="\n"+xhr.responseText
+        alert("ERROR:" + errorMessage)
+        ajaxActiveFlag=0
+        document.getElementById("printResult").textContent = "ERROR: " + errorMessage
+      }})
+      getPin()
 
-        // Infos
-        document.getElementById("printZebraMultiMacForm").textContent =  printZebraMultiMacForm
-        document.getElementById("printZebraMac38x23Form").textContent =  printZebraMac38x23Form
-        
-        $.ajaxSetup({ 
-				type: 'POST',	
-				timeout: 60000, 	// 60 secs Time
-				error: function(xhr, status , error){ // error string already in xhr
-					var errorMessage = xhr.status + ': ' + xhr.statusText+" - AJAX:'"+error+"'"
-					if(xhr.responseText!==undefined) errorMessage+="\n"+xhr.responseText
-					alert("ERROR:" + errorMessage)
-					ajaxActiveFlag=0
-					document.getElementById("printResult").textContent = "ERROR: " + errorMessage
-				}
-			})
+      // Set Parameters
+      document.getElementById("blxMAC").textContent = urlpar.mac
+      document.getElementById("blxType").textContent = urlpar.type
+      document.getElementById("blxFW").textContent = urlpar.fw
+      document.getElementById("blxDevice").textContent = urlpar.advname
+      // PIN by Ajax 
 
-		}
+      // Infos
+      document.getElementById("printZebraMultiMacForm").textContent =  printZebraMultiMacForm
+      document.getElementById("printZebraMac38x23Form").textContent =  printZebraMac38x23Form
+      document.getElementById("printZebraMacPinLogoForm").textContent =  printZebraMacPinLogo38x23Form
+
+    }
 		window.addEventListener("load", setup)
     </script>
 
   </head>
   <body>
-		<b>LTX Badge V0.1 / 12.03.2021</b>
+		<b>LTX Badge V0.2 / 18.03.2021</b>
     <hr>
     <div>
       Device: <span id="blxDevice">???</span><br><br>
@@ -107,10 +145,16 @@
       Type: <span id="blxType">???</span><br>
       FW: V<span id="blxFW">???</span><br>
       <br>
+      PIN: <span id="blxPin">???</span><br>
+      <br>
     </div>
     <div>
       <button onclick="printZebraMultiMac()">Print (multiple) MACs (Zebra Printer)</button> (Form: '<span id="printZebraMultiMacForm">???</span>'')<br><br>
       <button onclick="printZebra38x23Mac()">Print Packing Label (Zebra Printer)</button> (Form: '<span id="printZebraMac38x23Form">???</span>'')<br><br>
+      <button onclick="printZebra38x23MacPinLogo()">Print MacPinLogo Label (Zebra Printer)</button> (Form: '<span id="printZebraMacPinLogoForm">???</span>'')<br><br>
+
+      <br>
+      <button onclick="printForms()">Forms... (Zebra Printer)</button> <br><br>
       
     </div>
     <hr>

@@ -4,7 +4,9 @@
 This small PHP script 'zebra_printer.php' prints an indivial label on demand.
 It is possible to include own images and variables.
 
-ZPL is a simple language for lables. A 'Programming Guide' can be downloaded from the manufacturer's homepage
+ZPL is a simple language for lables. A 'Programming Guide' can be downloaded from the manufacturer's homepage.
+ZPL files can be edited manually or made with the (free) ZEBRA designer.
+
 
 This is a simple label with 4 lines
 ```
