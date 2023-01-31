@@ -8,7 +8,7 @@ For "Auto Print" Forms see 'badge.html' as sample usecase.
     <head>
         <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="jquery-3.3.1.min.js"></script>
+		<script src="jquery.min.js"></script>
 		
         <title>ZEBRA Label</title>
 		        
